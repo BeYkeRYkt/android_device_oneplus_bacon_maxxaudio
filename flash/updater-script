@@ -34,4 +34,4 @@ set_perm_recursive(0, 0, 0755, 0644, "/system/vendor/lib/soundfx");
 
 run_program("/sbin/busybox", "umount", "/system");
 ui_print("Done!");
-ui_print("Please, set 'audio.offload.disable=1' and 'av.offload.enable=false' in system.prop!");
+ui_print("Please, set 'audio.offload.disable=1' and 'audio.offload.video=false' in system.prop!");
