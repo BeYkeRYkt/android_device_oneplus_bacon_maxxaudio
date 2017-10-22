@@ -1,0 +1,37 @@
+ifelse(is_mounted("/system"), unmount("/system"));
+run_program("/sbin/busybox", "mount", "/system");
+
+ui_print("=== COS13 MAXXAUDIO ===");
+ui_print(" ");
+ui_print("-> Deleting Old Files.....");
+delete("/system/addon.d/90-Maxxaudio.sh");
+delete("/system/addon.d/90-ModioFX.sh");
+delete("/system/addon.d/75-ModioFX.sh");
+delete_recursive("/system/app/ModioFX");
+delete_recursive("/system/priv-app/ModioFX");
+delete_recursive("/system/app/AudioFX");
+delete_recursive("/system/priv-app/AudioFX");
+delete_recursive("/system/app/MaxxAudioFX");
+delete_recursive("/system/priv-app/MaxxAudioFX");
+delete_recursive("/system/app/DSPManager");
+delete_recursive("/system/priv-app/DSPManager");
+delete_recursive("/system/app/ViPER4Android");
+delete_recursive("/system/priv-app/ViPER4Android");
+
+delete_recursive("/system/vendor/lib/libMA3-processcode-Coretex_A9.so");
+delete_recursive("/system/vendor/lib/libMA3-processcode-Qualcomm.so");
+delete_recursive("/system/vendor/lib/libMA3-wavesfx-Coretex_A9.so");
+delete_recursive("/system/vendor/lib/libMA3-wavesfx-Qualcomm.so");
+
+ui_print("-> Extracting Files.....");
+package_extract_dir("system", "/system");
+ui_print("-> Setting Permissions.....");
+set_perm_recursive(0, 0, 0755, 0644, "/system/etc");
+set_perm_recursive(0, 0, 0755, 0644, "/system/etc/waves");
+set_perm_recursive(0, 0, 0755, 0644, "/system/vendor/etc");
+set_perm_recursive(0, 0, 0755, 0644, "/system/vendor/lib");
+set_perm_recursive(0, 0, 0755, 0644, "/system/vendor/lib/soundfx");
+
+run_program("/sbin/busybox", "umount", "/system");
+ui_print("Done!");
+ui_print("Please, add "audio.offload.disable=1" to system.prop!");
